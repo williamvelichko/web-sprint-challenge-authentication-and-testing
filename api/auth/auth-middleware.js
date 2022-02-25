@@ -5,10 +5,18 @@ const model = require("./auth-model");
 const validateRegistration = async (req, res, next) => {
   //const { username, password } = req.body;
   const username = req.body.username;
-  const result = await model.getBy({ username }).first();
+
   if (!username || !req.body.password) {
     res.status(401).json({ message: "username and password required" });
-  } else if (result) {
+  } else {
+    next();
+  }
+};
+const validateUsername = async (req, res, next) => {
+  //const { username, password } = req.body;
+  const username = req.body.username;
+  const result = await model.getBy({ username }).first();
+  if (result) {
     res.status(401).json({ message: "username taken" });
   } else {
     next();
@@ -34,4 +42,5 @@ const validateLogin = async (req, res, next) => {
 module.exports = {
   validateRegistration,
   validateLogin,
+  validateUsername,
 };
