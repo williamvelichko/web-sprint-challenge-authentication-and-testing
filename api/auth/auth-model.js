@@ -8,7 +8,7 @@ async function getById(id) {
   return db("users").where("id", id).first();
 }
 
-async function getBy(filter) {
+function getBy(filter) {
   return db("users").where(filter);
 }
 
